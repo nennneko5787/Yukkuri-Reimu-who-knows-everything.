@@ -1,0 +1,3 @@
+akinator[async]
+discord.py
+Flask
