@@ -64,6 +64,9 @@ class AkinatorWinView(discord.ui.View):
 	@discord.ui.button(label="はい", style=discord.ButtonStyle.primary)
 	async def yes(self, interaction: discord.Interaction, button: discord.ui.Button):
 		await interaction.response.defer()
+		if interaction.user.id != interaction.message.interaction.user.id:
+			await interaction.response.send_message("他の人は回答できません！", ephemeral=True)
+			return
 		embed = discord.Embed(title="よしあたった！！", description=f"キャラクター: {self.akinator.first_guess['name']}\n({self.akinator.first_guess['description']})")
 		embed.set_image(url=self.akinator.first_guess['absolute_picture_path'])
 		await interaction.message.edit(embed=embed,view=None)
@@ -72,6 +75,9 @@ class AkinatorWinView(discord.ui.View):
 	@discord.ui.button(label="いいえ", style=discord.ButtonStyle.danger)
 	async def no(self, interaction: discord.Interaction, button: discord.ui.Button):
 		await interaction.response.defer()
+		if interaction.user.id != interaction.message.interaction.user.id:
+			await interaction.response.send_message("他の人は回答できません！", ephemeral=True)
+			return
 		print(f"{self.guess} / {len(self.akinator.guesses)}")
 		if self.guess == len(self.akinator.guesses):
 			print("∩(・∀・)∩　ﾓｳ ｵﾃｱｹﾞﾀﾞﾈ")
@@ -87,6 +93,10 @@ class AkinatorWinView(discord.ui.View):
 
 async def akinatorAnswer(akinator: Akinator, interaction: discord.Interaction, answer: str):
 	await interaction.response.defer()
+	if interaction.user.id != interaction.message.interaction.user.id:
+		await interaction.response.send_message("他の人は回答できません！", ephemeral=True)
+		return
+
 	if akinator.progression <= 80:
 		if answer == "back":
 			try:
