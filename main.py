@@ -67,6 +67,7 @@ class AkinatorWinView(discord.ui.View):
 		if interaction.user.id != interaction.message.interaction.user.id:
 			await interaction.followup.send("他の人は回答できません！", ephemeral=True)
 			return
+		self.guess = self.guess - 1
 		embed = discord.Embed(title="よしあたった！！", description=f"キャラクター: {self.akinator.guesses[self.guess]['name']}\n({self.akinator.guesses[self.guess]['description']})")
 		embed.set_image(url=self.akinator.guesses[self.guess]['absolute_picture_path'])
 		await interaction.message.edit(embed=embed,view=None)
