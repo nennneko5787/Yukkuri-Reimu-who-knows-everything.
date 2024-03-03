@@ -3,7 +3,7 @@
 import discord
 from discord import app_commands
 from keep_alive import keep_alive
-import akinator
+import akinator as Aki
 from akinator.async_aki import Akinator
 import asyncio
 import os
@@ -102,7 +102,7 @@ async def akinatorAnswer(akinator: Akinator, interaction: discord.Interaction, a
 		if answer == "back":
 			try:
 				q = await akinator.back()
-			except akinator.CantGoBackAnyFurther:
+			except Aki.CantGoBackAnyFurther:
 				pass
 		else:
 			await akinator.answer(answer)
