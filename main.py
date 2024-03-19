@@ -2,6 +2,7 @@
 
 import discord
 from discord import app_commands
+from discord.ext import tasks
 from keep_alive import keep_alive
 import akinator as Aki
 from akinator.async_aki import Akinator
