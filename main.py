@@ -18,6 +18,7 @@ tree = app_commands.CommandTree(client)
 
 @client.event
 async def on_ready():
+	change_presence.start()
 	await tree.sync()
 
 @tree.command(name="ping", description="Ping値を確認します")
@@ -126,6 +127,11 @@ async def game(interaction: discord.Interaction):
 	view = AkinatorQuestionView(akinator)
 	embed = discord.Embed(title=f"{akinator.step + 1}番目の質問", description=akinator.question)
 	await interaction.followup.send(embed=embed,view=view)
+
+@tasks.loop(seconds=20)
+async def change_presence():
+	game = discord.Game(f"{len(client.guilds)} SERVERS")
+	await client.change_presence(status=discord.Status.online, activity=game)
 
 keep_alive()
 client.run(os.getenv("discord"))
