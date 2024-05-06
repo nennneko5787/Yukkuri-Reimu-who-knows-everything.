@@ -1,4 +1,5 @@
 # なんでも知ってるってマジですか！？！？
+# バグってる…
 
 import discord
 from discord import app_commands
