@@ -124,11 +124,14 @@ async def akinatorAnswer(akinator: Akinator, interaction: discord.Interaction, a
 @tree.command(name="game", description="ゲームを開始します")
 async def game(interaction: discord.Interaction):
 	await interaction.response.defer()
-	akinator = Akinator()
-	q = await akinator.start_game(language="jp")
-	view = AkinatorQuestionView(akinator)
-	embed = discord.Embed(title=f"{akinator.step + 1}番目の質問", description=akinator.question)
-	await interaction.followup.send(embed=embed,view=view)
+	try:
+		akinator = Akinator()
+		q = await akinator.start_game(language="jp")
+		view = AkinatorQuestionView(akinator)
+		embed = discord.Embed(title=f"{akinator.step + 1}番目の質問", description=akinator.question)
+		await interaction.followup.send(embed=embed,view=view)
+	except Exception as e:
+		await interaction.followup.send(f"{e}")
 
 @tasks.loop(seconds=20)
 async def change_presence():
